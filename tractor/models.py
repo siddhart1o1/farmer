@@ -7,9 +7,9 @@ from .utils import unique_slug_generator
 class Farmer(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    phone =models.CharField(max_length=10)
+    phone =models.CharField(max_length=10,unique=True)
     address = models.TextField(max_length=200)
-    email_address = models.EmailField()
+    email_address = models.EmailField(unique=True)
 
     def full_name(self):
         return f"{self.first_name} {self.last_name}"

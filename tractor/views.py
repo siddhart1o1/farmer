@@ -21,12 +21,12 @@ def add_post(request):
     if(request.method == "POST"):
         farmer_form = FarmerForm(request.POST)
         post_form = PostForm(request.POST)
-        if(farmer_form.is_valid() and post_form.is_valid()):
+        if(post_form.is_valid() and farmer_form.is_valid()):
             farmer = farmer_form.save()
             post = post_form.save(False) 
             post.farmer = farmer    
             post.save()
-            return redirect(reverse("tractor.views.posts"))
+            return redirect(reverse("tractor:post_page"))
     else:
         farmer_form = FarmerForm()
         post_form = Post()
