@@ -1,21 +1,20 @@
 {% extends "base.html" %} {% block content %}
 <br />
-<h1 style="margin-left: 40px">Add Event</h1>
+<h1 style="margin-left: 40px">Add Tractors</h1>
 <br />
 {% if submitted %}
 <h3 style="margin-left: 40px">Your Form is Submitted</h3>
 {% else %}
 <div class="form-group">
-<div class="form-group">
   <form
     method="POST"
     style="margin-left: 40px; margin-right: 100px"
     enctype="multipart/form-data"
-    action="{% url 'tractor:add_post' %}">
+    action="{% url 'tractor:add_post' %}"
+    >     
     {% csrf_token %} 
-    {{post_form}}
-    {{farmer_form}}
- 
+    {{post_form.as_p}}
+    {{farmer_form.as_p}}
     <input type="submit" class="btn btn-dark" value="Submit" />
   </form>
 </div>
