@@ -1,0 +1,41 @@
+
+{% load static %}
+<style>
+  body {
+  background: #fafafa;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.card {
+  padding: 25px;
+  background: #fff;
+  max-width: 360px;
+  border-radius: 20px;
+  margin: 60px auto;
+}
+
+.highlight {
+  font-weight: bold;
+  color: #294;
+}
+
+.shadow1 { 
+  box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+}
+
+.shadow2 { 
+  box-shadow: 0 7px 30px -10px rgba(150,170,180,0.5);
+}
+</style>
+<div class="card shadow1">
+<a style="text-decoration:none" href="{% url 'tractor:post_detail_page' slug=post.slug %}">
+<h2 style="color:black;"><b>{{post.tractor_company}} || {{post.tractor_model}}</b></h2></a>
+<pre><h5><b>{{post.implimentaion}}</b></h5>
+{{post.farmer}}
+Uplode Date : {{post.date}}</pre>
+</div>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+All Tractors
+{% endblock  %}
+
+{% block content%}
+<section id="all_events">
+    <br>
+    <h1 style="text-align:center;"><b>All Tractors</b></h1>
+    <ul>
+      {% for post in posts %}
+        {% include "tractor/includes/singlePost.html" %}
+      {% endfor %}
+    </ul>
+
+</section>
+{% endblock %}
+
+

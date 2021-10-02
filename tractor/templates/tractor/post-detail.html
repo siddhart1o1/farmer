@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Details 
+{% endblock  %}
+
+{% block content%}
+<br>
+    <h1 style="text-align:center;"><b>Details</b></h1>
+<div style="margin-left: 50px;">
+<h2><b>{{post.tractor_company}}  {{post.tractor_model}}</b></h2>
+<h5>Tracor is used for <b>{{post.implimentaion}} </b></h5>
+<h5>Tractor Original price Rs.{{post.tractor_price}}</h5>
+<h5>Purchase On {{post.purchase_date}}</h5>
+<h5>Description <p>{{post.description}}</p></h5>
+<br>
+<h2><b>Owner Detials</b></h2> 
+<h5>Name: {{post.farmer}}</h5>
+<h5>Phone No. {{post.farmer.phone}}</h5>
+<h5>Email id {{post.farmer.email_address}}</h5>
+<h5>Address: {{post.farmer.address}}</h5>
+
+</div>
+{% endblock %}
