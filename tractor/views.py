@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect ,get_object_or_404
-from .models import Post, Farmer
+from .forms import FarmerForm,PostForm,Post
 from .forms import FarmerForm
 # Create your views here.
 from django.http import HttpResponseRedirect 
@@ -18,19 +18,19 @@ def posts(request):
 def add_post(request):
     submitted = False
     if(request.method == "POST"):
-        form = FarmerForm(request.POST)
-        if(form.is_valid()):
-            
-            farmer = Farmer(first_name=form.cleaned_data['first_name'],last_name=form.cleaned_data['last_name'],phone=form.cleaned_data['phone'],address=form.cleaned_data['address'],email_address=form.cleaned_data['email_address'])
-            farmer.save()
-            form.save()
+        form1 = FarmerForm(request.POST,prefix="form1")
+        form2 = PostForm(request.POST,prefix="form2")
+        
+        if form1.is_valid() and form2.is_valid():
+            form1.save()
+            form2.save()
             return HttpResponseRedirect("/add_post?submitted=True")
     else:
-        form = FarmerForm()
+        form1 = FarmerForm(prefix="form1")
+        form2 = PostForm(prefix="form2")
         if("submitted" in request.GET):
             submitted = True
-    return render(request,"tractor/form.html",{"form":form, "submitted": submitted})
-
+    return render(request,"tractor/form.html",{"form1":form1,"form2":form2, "submitted": submitted})
 
 def post_detail(request,slug):
     indentified_post = get_object_or_404(Post,slug=slug)
