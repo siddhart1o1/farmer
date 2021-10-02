@@ -1,9 +1,11 @@
 
 from django import forms
+from django.template.context_processors import csrf
+from django.urls import reverse
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect ,get_object_or_404
-from .forms import FarmerForm,PostForm,Post
-from .forms import FarmerForm
+from .models import Post, Farmer
+from .forms import FarmerForm,PostForm
 # Create your views here.
 from django.http import HttpResponseRedirect 
 # Create your views here.
@@ -16,21 +18,25 @@ def posts(request):
     return render(request,"tractor/all-post.html",context)
     
 def add_post(request):
-    submitted = False
     if(request.method == "POST"):
-        form1 = FarmerForm(request.POST,prefix="form1")
-        form2 = PostForm(request.POST,prefix="form2")
-        
-        if form1.is_valid() and form2.is_valid():
-            form1.save()
-            form2.save()
-            return HttpResponseRedirect("/add_post?submitted=True")
+        farmer_form = FarmerForm(request.POST)
+        post_form = PostForm(request.POST)
+        if(farmer_form.is_valid() and post_form.is_valid()):
+            farmer = farmer_form.save()
+            post = post_form.save(False) 
+            post.farmer = farmer    
+            post.save()
+            return redirect(reverse("tractor.views.posts"))
     else:
-        form1 = FarmerForm(prefix="form1")
-        form2 = PostForm(prefix="form2")
-        if("submitted" in request.GET):
-            submitted = True
-    return render(request,"tractor/form.html",{"form1":form1,"form2":form2, "submitted": submitted})
+        farmer_form = FarmerForm()
+        post_form = Post()
+
+    args = {}
+    args.update(csrf(request))
+    args["farmer_form"] = farmer_form
+    args["post_form"] =post_form
+    return render(request,"tractor/form.html",args)
+
 
 def post_detail(request,slug):
     indentified_post = get_object_or_404(Post,slug=slug)

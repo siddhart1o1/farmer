@@ -6,11 +6,17 @@
 <h3 style="margin-left: 40px">Your Form is Submitted</h3>
 {% else %}
 <div class="form-group">
-  <form method="POST" action="">
-{% csrf_token %}
-{{ form1.as_p }}
-{{ form2.as_p }}
-<button type='submit'> send data </button>
-</form>
+<div class="form-group">
+  <form
+    method="POST"
+    style="margin-left: 40px; margin-right: 100px"
+    enctype="multipart/form-data"
+    action="{% url 'tractor:add_post' %}">
+    {% csrf_token %} 
+    {{post_form}}
+    {{farmer_form}}
+ 
+    <input type="submit" class="btn btn-dark" value="Submit" />
+  </form>
 </div>
 {% endif %} {% endblock %}
